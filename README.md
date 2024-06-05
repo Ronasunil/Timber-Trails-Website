@@ -12,7 +12,7 @@ Timber Trials is a sophisticated hotel management website designed to offer user
 
 ### Home page
 
- <img src="./public/home.png.png" width="300" title="hover text">
+ <img src="./public/home.png" width="300" title="hover text">
 
 ### Cabins page
 
