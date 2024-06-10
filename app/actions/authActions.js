@@ -60,14 +60,14 @@ export async function loginAction(email, password, setError) {
       path: "/",
       secure: true,
       sameSite: "lax",
-      domain: "https://timber-trails-website.vercel.app",
+      domain: ".timber-trails-website.vercel.app",
     });
     cookies().set("refreshToken", refreshToken, {
       expires: refreshTokenExpire,
       path: "/",
       secure: true,
       sameSite: "lax",
-      domain: "https://timber-trails-website.vercel.app",
+      domain: ".timber-trails-website.vercel.app",
     });
 
     revalidatePath("/");
