@@ -5,10 +5,9 @@ import { currentLoggedinUser } from "../_auth/auth";
 export default async function UserProfile() {
   // deciding who is currently loggedin
   const { currentUser, profileImg } = await currentLoggedinUser();
-  console.log(currentUser);
+
   return (
     <>
-      <h1>{currentUser}sssssssssssssssssssssssssssssssss</h1>
       <div
         className={`relative ${currentUser?.image && "w-10 h-10"} rounded-full`}
       >

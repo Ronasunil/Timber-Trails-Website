@@ -1,5 +1,5 @@
 import axios from "axios";
-import Cookies from "js-cookie";
+
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -16,4 +16,6 @@ export const login = async function (email, password) {
 
 export async function logout() {
   await axios.get("/api/credentials/logout");
+  revalidatePath("/");
+  redirect("/");
 }

@@ -47,18 +47,22 @@ export async function isAuthenticated() {
 
   const currentUser = await getUser(decoded.email);
 
+  console.log(currentUser, "currentUser");
   return currentUser;
 }
 
 export async function currentLoggedinUser() {
   const session = await auth();
   const user = await isAuthenticated();
+
+  console.log("user", user, "session", session);
   let currentUser = session?.user;
   let profileImg = "";
-  if (!session) {
+  if (session?.message || !session) {
     currentUser = user;
     profileImg = defaultImg.src;
   }
 
+  console.log(currentUser, "currentLoggedinuser");
   return { currentUser, profileImg };
 }
