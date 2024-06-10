@@ -42,7 +42,10 @@ export async function signupAction(name, email, password, setError) {
 
 export async function loginAction(email, password, setError) {
   try {
-    const res = await axios.post(`/api/credentials/login`, { email, password });
+    const res = await axios.post(
+      `${process.env.BASE_URL}/api/credentials/login`,
+      { email, password }
+    );
 
     const now = new Date();
     const thrithDay = new Date(now);
