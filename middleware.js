@@ -28,8 +28,6 @@ export default async function middleware(req) {
   const accessToken = cookies().get("accessToken")?.value || "";
   const refreshToken = cookies().get("refreshToken")?.value || "";
 
-  console.log(accessToken, "j", refreshToken, "jujj");
-
   const localSession =
     refreshToken || accessToken
       ? await localAuthCheck(accessToken, refreshToken)

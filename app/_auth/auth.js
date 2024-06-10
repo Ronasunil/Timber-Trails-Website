@@ -26,8 +26,11 @@ export const getAccessToken = async function (refreshToken) {
 export const getUser = async function (email) {
   try {
     const res = await axios.get(`http://localhost:3000/api/users/${email}`);
+    console.log(res, "response");
     return res.data.data;
-  } catch (err) {}
+  } catch (err) {
+    console.log(err.response);
+  }
 };
 
 export async function isAuthenticated() {
