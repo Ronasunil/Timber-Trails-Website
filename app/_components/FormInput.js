@@ -26,7 +26,7 @@ export default function FormInput({
         )}
         <input
           className="h-10 outline-none focus: outline-2 w-[100%] focus: outline-offset-1 focus:outline-yellow-600 text-gray-800 px-4 text-xl"
-          type={showPassword ? "text" : "password"}
+          type={!isPassWord || showPassword ? "text" : "password"}
           {...register}
         />
       </div>
