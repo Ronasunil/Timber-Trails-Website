@@ -58,6 +58,9 @@ export async function loginAction(email, password, setError) {
     cookies().set("accessToken", accessToken, {
       expires: accessTokenExpire,
       path: "/",
+      httpOnly: true,
+      secure: true,
+      sameSite: "lax",
     });
     cookies().set("refreshToken", refreshToken, {
       expires: refreshTokenExpire,
