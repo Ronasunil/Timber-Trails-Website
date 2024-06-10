@@ -12,6 +12,8 @@ import {
 } from "../_services/data-service";
 
 import { auth, signIn, signOut } from "../api/auth/[...nextauth]/route";
+import { cookies } from "next/headers";
+import { currentLoggedinUser } from "../_auth/auth";
 
 export async function signInAction() {
   await signIn("google", { redirectTo: "/" });
@@ -22,10 +24,10 @@ export async function signOutAction() {
 }
 
 export async function updateGuestProfile(formData) {
-  const session = await auth();
+  const { currentUser } = await currentLoggedinUser();
 
   // checking is authenticated user doing action
-  if (!session.user) return;
+  if (!currentUser) return;
 
   // checking values are safe
   const [nationality, countryFlag] = formData.get("nationality").split("%");
@@ -35,7 +37,7 @@ export async function updateGuestProfile(formData) {
 
   if (!/^(?=.*[a-zA-Z])[a-zA-Z0-9]{3,12}$/.test(nationalid)) return;
 
-  await updateGuest(session.user.guestId, {
+  await updateGuest(currentUser.guestId, {
     nationalid,
     nationality,
     countryFlag,
@@ -45,11 +47,11 @@ export async function updateGuestProfile(formData) {
 }
 
 export async function deleteReservation(bookingId) {
-  const session = await auth();
+  const { currentUser } = await currentLoggedinUser();
 
-  if (!session.user) throw new Error("Please login");
+  if (!currentUser) throw new Error("Please login");
 
-  const bookings = await getBookings(session.user.guestId);
+  const bookings = await getBookings(currentUser.guestId);
   const bookingIds = bookings.map((b) => b.id);
 
   if (!bookingIds.includes(bookingId))
@@ -61,10 +63,10 @@ export async function deleteReservation(bookingId) {
 }
 
 export async function updateReservation(formData) {
-  const session = await auth();
+  const { currentUser } = await currentLoggedinUser();
 
   // checking is authenticated user doing action
-  if (!session.user) throw new error("Please login");
+  if (!currentUser) throw new error("Please login");
 
   const numGuest = +formData.get("numGuest");
   const maxGuest = +formData.get("maxCapacity");
@@ -87,15 +89,15 @@ export async function updateReservation(formData) {
 export async function createBooking(bookingData, formData) {
   console.log(formData, bookingData);
 
-  const session = await auth();
+  const { currentUser } = await currentLoggedinUser();
 
-  if (!session.user) throw new Error("Please Login");
+  if (!currentUser) throw new Error("Please Login");
 
   const booking = {
     ...bookingData,
     numGuest: Number.parseInt(formData.get("numOfGuest")),
     observation: formData.get("observation").slice(0, 700),
-    guestId: session.user.guestId,
+    guestId: currentUser.guestId,
     totalPrice: bookingData.price,
     extraPrice: 0,
     status: "unconfirmed",

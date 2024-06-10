@@ -1,6 +1,5 @@
 "use client";
 
-import { deleteReservation } from "../actions/action";
 import { useTransition } from "react";
 
 import DeleteContent from "./DeleteContent";

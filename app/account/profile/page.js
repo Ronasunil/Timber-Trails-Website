@@ -1,16 +1,22 @@
+import { currentLoggedinUser } from "@/app/_auth/auth";
 import SelectCountry from "@/app/_components/SelectCountry";
 import UpdateUserProfile from "@/app/_components/UpdateProfile";
 import { getGuest } from "@/app/_services/data-service";
-import { auth } from "@/app/api/auth/[...nextauth]/route";
 
 export const metadata = {
   title: "profile",
 };
 
 export default async function Page() {
-  const session = await auth();
-  console.log(session);
-  const user = await getGuest(session.user.email);
+  let { currentUser } = await currentLoggedinUser();
+
+  if (!currentUser.nationalid) {
+    const guest = await getGuest(currentUser.email);
+
+    currentUser = { ...currentUser, ...guest };
+  }
+
+  console.log(currentUser, "lopppppppppppppp");
 
   return (
     <div>
@@ -22,12 +28,12 @@ export default async function Page() {
         Providing the following information will make your check-in process
         faster and smoother. See you soon!
       </p>
-      <UpdateUserProfile user={user}>
+      <UpdateUserProfile user={currentUser}>
         <SelectCountry
           name="nationality"
           id="nationality"
           className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
-          defaultCountry={user.nationality}
+          defaultCountry={currentUser.nationality}
         />
       </UpdateUserProfile>
     </div>

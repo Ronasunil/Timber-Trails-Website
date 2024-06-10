@@ -1,5 +1,6 @@
 import Navigation from "./_components/Navigation";
 import Logo from "./_components/Logo";
+// import UserProvider from "./_context/UserContext";
 import { Josefin_Sans } from "next/font/google";
 
 import "@/app/_styles/globals.css";
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
       >
         <Header>
           <Logo />
+
           <Navigation />
         </Header>
         <div className="  flex-1  px-8 py-5 h-[80vh]">

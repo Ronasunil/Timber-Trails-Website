@@ -1,16 +1,17 @@
-import ReservationCard from "@/app/_components/ReservationCard";
+import { currentLoggedinUser } from "@/app/_auth/auth";
 import ReservationList from "@/app/_components/ReservationList";
 import { getBookings } from "@/app/_services/data-service";
-import { auth } from "@/app/api/auth/[...nextauth]/route";
 
 export const metadata = {
   title: "reservation",
 };
 
 export default async function Page() {
-  const session = await auth();
+  const { currentUser } = await currentLoggedinUser();
 
-  const bookings = await getBookings(session.user.guestId);
+  console.log(currentUser, "lop");
+
+  const bookings = await getBookings(currentUser?.guestId);
 
   return (
     <div>

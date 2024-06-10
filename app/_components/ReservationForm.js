@@ -2,13 +2,13 @@
 import { useFormStatus } from "react-dom";
 import Link from "next/link";
 
-import { differenceInCalendarDays, differenceInDays } from "date-fns";
+import { differenceInCalendarDays } from "date-fns";
 import { useReservation } from "../_context/ReservationContext";
 import { createBooking } from "../actions/action";
 
-function ReservationForm({ cabin, user }) {
+function ReservationForm({ cabin, user, profileImage }) {
   const { range, resetRange } = useReservation();
-
+  console.log(profileImage, "imageeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
   const { maxCapacity, price, id: cabinId } = cabin;
   const { from: startDate, to: endDate } = range;
   const numOfStays = differenceInCalendarDays(endDate, startDate) + 1;
@@ -33,7 +33,7 @@ function ReservationForm({ cabin, user }) {
             <img
               referrerPolicy="no-referrer"
               className="h-8 rounded-full"
-              src={user.image}
+              src={profileImage || user?.image}
               alt={user.name}
             />
             <p>{user.name}</p>

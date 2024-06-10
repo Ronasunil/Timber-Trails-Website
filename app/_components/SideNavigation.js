@@ -4,12 +4,20 @@ import {
   CalendarDaysIcon,
   HomeIcon,
   UserIcon,
+  EyeIcon,
 } from "@heroicons/react/24/solid";
 import SignOutButton from "./SignOutButton";
-import { useRouter } from "next/router";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { signOutAction } from "../actions/action";
+import { logout } from "../utils/helpers";
+import { useTransition } from "react";
+import SpinnerMini from "@/components/SpinnerMini";
+
+function handleLogout() {
+  signOutAction?.();
+  logout?.();
+}
 
 const navLinks = [
   {
@@ -31,6 +39,8 @@ const navLinks = [
 
 function SideNavigation() {
   const path = usePathname();
+  const [isPending, startTransition] = useTransition();
+
   console.log(path);
   return (
     <nav className="border-r border-x-primary-800 h-full">
@@ -50,8 +60,14 @@ function SideNavigation() {
         ))}
 
         <li className="mt-auto">
-          <form action={signOutAction}>
-            <SignOutButton />
+          <form
+            action={() => {
+              startTransition(() => handleLogout());
+            }}
+          >
+            <SignOutButton>
+              {isPending ? <SpinnerMini /> : "Sign out"}
+            </SignOutButton>
           </form>
         </li>
       </ul>

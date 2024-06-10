@@ -5,9 +5,10 @@ import {
   getSettings,
 } from "../_services/data-service";
 import { auth } from "../api/auth/[...nextauth]/route";
+import { currentLoggedinUser } from "../_auth/auth";
 
 export default async function Reservation({ cabin }) {
-  const session = await auth();
+  const { currentUser, profileImg } = await currentLoggedinUser();
   const { id } = cabin;
 
   const [settings, bookingDates] = await Promise.all([
@@ -22,7 +23,11 @@ export default async function Reservation({ cabin }) {
         bookingDates={bookingDates}
         settings={settings}
       />
-      <ReservationForm cabin={cabin} user={session?.user} />
+      <ReservationForm
+        cabin={cabin}
+        user={currentUser}
+        profileImage={profileImg}
+      />
     </div>
   );
 }

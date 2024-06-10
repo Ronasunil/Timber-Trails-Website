@@ -2,6 +2,7 @@ import { createGuest, getGuest } from "@/app/_services/data-service";
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
+// Google auth
 export const authOptions = {
   providers: [
     GoogleProvider({
@@ -26,7 +27,9 @@ export const authOptions = {
     async session({ session, user }) {
       const guest = await getGuest(session.user.email);
 
-      session.user.guestId = guest.id;
+      console.log(session, "session");
+
+      session.user.guestId = guest?.id;
 
       return session;
     },
