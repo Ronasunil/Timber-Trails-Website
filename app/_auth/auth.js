@@ -9,7 +9,7 @@ import { auth } from "../api/auth/[...nextauth]/route";
 export const getAccessToken = async function (refreshToken) {
   try {
     const res = await axios.post(
-      "http://localhost:3000/api/credentials/refreshToken",
+      `${process.env.BASE_URL}/api/credentials/refreshToken`,
       {
         refreshToken,
       }
