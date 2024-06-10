@@ -6,7 +6,7 @@ import { currentLoggedinUser } from "../_auth/auth";
 export default async function UserProfile() {
   // deciding who is currently loggedin
   const { currentUser, profileImg } = await currentLoggedinUser();
-
+  console.log(currentUser);
   return (
     <>
       <div

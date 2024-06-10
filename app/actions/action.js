@@ -11,8 +11,8 @@ import {
   createBooking as createBookingApi,
 } from "../_services/data-service";
 
-import { auth, signIn, signOut } from "../api/auth/[...nextauth]/route";
-import { cookies } from "next/headers";
+import { signIn, signOut } from "../api/auth/[...nextauth]/route";
+
 import { currentLoggedinUser } from "../_auth/auth";
 
 export async function signInAction() {
