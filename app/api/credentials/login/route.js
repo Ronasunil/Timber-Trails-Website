@@ -19,6 +19,7 @@ export async function POST(req) {
   // prettier-ignore
   if (!isPasswordCorrect) return NextResponse.json({status:"Fail", message:"Invalid email or password"}, {status:401})
 
+  console.log(isPasswordCorrect, "password", process.env.JWT_SECRET);
   const accessToken = sign({ email }, process.env.JWT_SECRET, {
     expiresIn: "30min",
   });
