@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { checkUserExist } from "@/app/_services/data-service";
@@ -26,8 +27,25 @@ export async function POST(req) {
     expiresIn: "30d",
   });
 
-  return NextResponse.json(
+  const response = NextResponse.json(
     { status: "Success", refreshToken, accessToken },
     { status: 200 }
   );
+
+  const cookieStore = cookies(response);
+
+  const now = new Date();
+  const thrithDay = new Date(now);
+  thrithDay.setDate(now.getDate() + 30);
+
+  const refreshTokenExpire = thrithDay;
+
+  cookieStore.set("refreshToken", {
+    httpOnly: true,
+    secure: true,
+    path: "/",
+    expires: refreshTokenExpire,
+  });
+
+  return response;
 }

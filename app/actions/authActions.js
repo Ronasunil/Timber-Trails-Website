@@ -55,18 +55,18 @@ export async function loginAction(email, password, setError) {
     const accessTokenExpire = new Date(new Date().getTime() + 15 * 60 * 1000);
     const refreshTokenExpire = thrithDay;
 
-    cookies().set("accessToken", accessToken, {
-      expires: accessTokenExpire,
-      path: "/",
-      secure: true,
-      sameSite: "lax",
-    });
-    cookies().set("refreshToken", refreshToken, {
-      expires: refreshTokenExpire,
-      path: "/",
-      secure: true,
-      sameSite: "lax",
-    });
+    // cookies().set("accessToken", accessToken, {
+    //   expires: accessTokenExpire,
+    //   path: "/",
+    //   secure: true,
+    //   sameSite: "lax",
+    // });
+    // cookies().set("refreshToken", refreshToken, {
+    //   expires: refreshTokenExpire,
+    //   path: "/",
+    //   secure: true,
+    //   sameSite: "lax",
+    // });
 
     revalidatePath("/");
     return { status: "success" };
